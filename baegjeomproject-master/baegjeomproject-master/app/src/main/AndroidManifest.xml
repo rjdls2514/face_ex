@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.testtesttest">
+    <permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        >
+        <activity
+            android:name="MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <!--여기는 스플래시 액티비티입니당-->
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!--여기까지 스플래시인데 오류가있다면 말해주세용-->
+
+        <activity
+            android:name=".BubblingPhotoActivity"
+            android:label="@string/photo"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity
+        android:name=".BubblingFolderActivity"
+        android:label="@string/folder"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity
+            android:name=".AllalbumActivity"
+            android:label="@string/allalbum"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity
+            android:name=".BubblingMemoActivity"
+            android:label="Memo"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity
+            android:name=".BubblingFaceActivity"
+            android:label="Face"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
+        <activity
+            android:name=".HowtouseActivity"
+            android:label="Howtouse"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity
+            android:name=".PhotoPopupActivity"
+            android:label="@string/photopopup"
+            android:theme="@style/AppTheme"
+            />
+
+    </application>
+
+</manifest>

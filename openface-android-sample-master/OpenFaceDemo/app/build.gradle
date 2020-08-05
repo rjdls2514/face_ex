@@ -1,0 +1,80 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'Testing key'
+            keyPassword 'Vicomtech1'
+            storeFile file('../keystores/TestingKeyStore.jks')
+            storePassword 'Vicomtech1'
+        }
+    }
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.example.openface.openfacedemo"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++14"
+                arguments "-DOpenCV_DIR=" + getOpenCVDir().toString() + "/sdk/native/jni",
+                        "-Ddlib_DIR=" + getDlibDir().toString() + "/dlib",
+                        "-DANDROID_NATIVE_API_LEVEL=23",
+                        "-DANDROID_CPP_FEATURES=rtti exceptions",
+                        "-DANDROID_STL=gnustl_static",
+                        "-DDLIB_ENABLE_ASSERTS=OFF",
+                        "-DDLIB_NO_GUI_SUPPORT=ON",
+                        "-DDLIB_JPEG_SUPPORT=OFF",
+                        "-DDLIB_PNG_SUPPORT=OFF",
+                        "-DDLIB_LINK_WITH_SQLITE3=OFF"
+                abiFilters 'armeabi-v7a', 'arm64-v8a'
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+}
+def getOpenCVDir() {
+    Properties properties = new Properties()
+    properties.load(new File(rootDir.absolutePath + "/local.properties").newDataInputStream())
+    def externalModuleDir = properties.getProperty('opencv.dir', null)
+    if (externalModuleDir == null) {
+        throw new GradleException(
+                "OpenCV location not found. Define location with opencv.dir in the local.properties file!")
+    }
+    return externalModuleDir
+}
+def getDlibDir() {
+    Properties properties = new Properties()
+    properties.load(new File(rootDir.absolutePath + "/local.properties").newDataInputStream())
+    def externalModuleDir = properties.getProperty('dlib.dir', null)
+    if (externalModuleDir == null) {
+        throw new GradleException(
+                "Dlib location not found. Define location with opencv.dir in the local.properties file!")
+    }
+    return externalModuleDir
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    compile 'com.github.uelordi01:Opencv-Android-3.3-gradle:1.1'
+    implementation project(path: ':opencv')
+}
